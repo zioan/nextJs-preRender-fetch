@@ -16,7 +16,7 @@ function HomePage(props) {
   );
 }
 
-// for generatic static data for generated pages
+// for generatic static data for static generated pages
 export async function getStaticProps(context) {
   console.log('(Re-)Generating...');
   const filePath = path.join(process.cwd(), 'data', 'dummy-backend.json');

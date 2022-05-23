@@ -25,7 +25,7 @@ async function getData() {
   return data;
 }
 
-// for generatic static data for generated pages
+// for generatic static data for static generated pages
 export async function getStaticProps(context) {
   const { params } = context;
   const productId = params.pid;
@@ -48,7 +48,7 @@ export async function getStaticProps(context) {
   };
 }
 
-// for dynamic generated pages
+// for dynamic generated static pages
 export async function getStaticPaths() {
   const data = await getData();
 

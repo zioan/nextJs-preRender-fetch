@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import useSWR from 'swr';
 
-function LastSales() {
-  const [sales, setSales] = useState();
+function LastSales(props) {
+  const [sales, setSales] = useState(props.sales);
   // const [isLoading, setIsLoading] = useState(false);
+
+  // useSWR also refetch the data when the page is on focus!
 
   const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
@@ -75,6 +77,30 @@ function LastSales() {
       ))}
     </ul>
   );
+}
+
+export async function getStaticProps() {
+  const response = await fetch(
+    'https://nextjs-course-275d8-default-rtdb.europe-west1.firebasedatabase.app/sales.json'
+  );
+
+  const data = await response.json();
+  const transformedSales = [];
+
+  for (const key in data) {
+    transformedSales.push({
+      id: key,
+      username: data[key].username,
+      volume: data[key].volume,
+    });
+  }
+
+  return {
+    props: {
+      sales: transformedSales,
+    },
+    revalidate: 10,
+  };
 }
 
 export default LastSales;
